@@ -45,7 +45,7 @@ impl<'a> Bom<'a> {
     /// Amend the BOM with the specified crates as `components` entries.
     pub fn with_dependencies(mut self, packages: impl IntoIterator<Item = &'a Package>) -> Self {
         self.components
-            .extend(packages.into_iter().map(Component::from));
+            .extend(packages.into_iter().map(Component::library));
         self
     }
 }
@@ -67,7 +67,7 @@ impl<'a> Default for Bom<'a> {
 impl<'a> FromIterator<&'a Package> for Bom<'a> {
     fn from_iter<T: IntoIterator<Item = &'a Package>>(iter: T) -> Self {
         Self {
-            components: iter.into_iter().map(Component::from).collect(),
+            components: iter.into_iter().map(Component::library).collect(),
             ..Default::default()
         }
     }
